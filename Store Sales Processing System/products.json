@@ -1,0 +1,15 @@
+{
+  "catalogue": [
+    { "code": "ELE-1001", "name": "Wireless Mouse",    "category": "Electronics", "price": 799 },
+    { "code": "ELE-1003", "name": "Bluetooth Speaker", "category": "Electronics", "price": 2499 },
+    { "code": "GRO-2001", "name": "Basmati Rice 5kg",  "category": "Grocery",     "price": 620 },
+    { "code": "GRO-2003", "name": "Coffee Powder",     "category": "Grocery",     "price": 280 },
+    { "code": "APP-3001", "name": "Cotton T-Shirt",    "category": "Apparel",     "price": 699 },
+    { "code": "APP-3002", "name": "Denim Jeans",       "category": "Apparel",     "price": 1899 },
+    { "code": "STA-4001", "name": "Notebook Pack",     "category": "Stationery",  "price": 180 },
+    { "code": "STA-4002", "name": "Gel Pen Set",       "category": "Stationery",  "price": 120 }
+  ],
+  "tax_rates": { "Electronics": 18, "Grocery": 5, "Apparel": 12, "Stationery": 12 },
+  "member_discount_percent": 5,
+  "payment_methods": ["CASH", "CARD", "UPI"]
+}

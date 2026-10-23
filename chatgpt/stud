@@ -1,0 +1,125 @@
+
+students = [{"id": 201, "name": "Ravi", "python": 88, "sql": 76, "web_api": 91},
+            {"id": 202, "name": "Meena", "python": 65, "sql": 82, "web_api": 70},
+            {"id": 203, "name": "Rahul", "python": 45, "sql": 78, "web_api": 85},
+            {"id": 204, "name": "Anu", "python": 92, "sql": 91, "web_api": 89},
+            {"id": 205, "name": "Kavya", "python": 70, "sql": 70, "web_api": 70}]
+total_marks = []
+avg_marks = []
+grades = []
+passed_students = []
+failed_students = []
+valid_students = []
+invalid_records = []
+ids = []
+
+for s in students:
+    if not all(k in s for k in ['id', 'name', 'python', 'sql', 'web_api']) or not isinstance(s.get('name'), str) or not s.get('name', '').strip() or type(s.get('id')) != int or s['id'] in ids or any(type(s.get(k)) != int or not 0 <= s[k] <= 100 for k in ['python', 'sql', 'web_api']):
+        invalid_records.append(s)
+        continue
+    ids.append(s['id'])
+    total = s['python'] + s['sql'] + s['web_api']
+    avg = total / 3
+    s['total'] = total
+    s['average'] = avg
+    if avg >= 85:
+        grade = "Excellent"
+    elif avg >= 70:
+        grade = "Good"
+    else:
+        grade = "Needs Improvement"
+    s['grade'] = grade
+    if s['python'] >= 50 and s['sql'] >= 50 and s['web_api'] >= 50:
+        s['status'] = "Pass"
+        passed_students.append(s)
+    else:
+        s['status'] = "Fail"
+        failed_students.append(s)
+    total_marks.append(total)
+    avg_marks.append(avg)
+    grades.append(grade)
+    valid_students.append(s)
+
+print("Total marks:", total_marks)
+print("Average marks:", avg_marks)
+print("Passed students:", [s['name'] for s in passed_students])
+print("Failed students:", [s['name'] for s in failed_students])
+print("Invalid records:", invalid_records)
+
+print("\nStudent grades and status:")
+for s in valid_students:
+    print(s['name'], "Total:", s['total'], "Average:", round(s['average'], 2), "Grade:", s['grade'], "Status:", s['status'])
+
+for i in range(len(valid_students)):
+    for j in range(len(valid_students) - i - 1):
+        a = valid_students[j]
+        b = valid_students[j + 1]
+        if a['average'] < b['average'] or (a['average'] == b['average'] and a['python'] < b['python']) or (a['average'] == b['average'] and a['python'] == b['python'] and a['name'].lower() > b['name'].lower()):
+            valid_students[j], valid_students[j + 1] = valid_students[j + 1], valid_students[j]
+
+print("\nRankings:")
+for i, s in enumerate(valid_students, 1):
+    print(i, s['name'], "Average:", round(s['average'], 2), "Python:", s['python'])
+
+print("\nTop five students:")
+for s in valid_students[:5]:
+    print(s['name'], s['average'])
+
+print("\nSubject toppers:")
+for subject in ['python', 'sql', 'web_api']:
+    highest = max(s[subject] for s in valid_students)
+    toppers = [s['name'] for s in valid_students if s[subject] == highest]
+    print(subject, "Highest marks:", highest, "Topper(s):", toppers)
+
+print("\nSubject statistics:")
+for subject in ['python', 'sql', 'web_api']:
+    marks = [s[subject] for s in valid_students]
+    passed = sum(1 for mark in marks if mark >= 50)
+    print(subject, "Average:", round(sum(marks) / len(marks), 2), "Highest:", max(marks), "Lowest:", min(marks), "Pass percentage:", round(passed / len(marks) * 100, 2), "%")
+
+class_average = sum(avg_marks) / len(avg_marks) if avg_marks else 0
+print("\nClass average:", round(class_average, 2))
+print("Students below class average:")
+for s in valid_students:
+    if s['average'] < class_average:
+        print(s['name'], round(s['average'], 2))
+
+print("\nGrade counts:")
+for grade in ['Excellent', 'Good', 'Needs Improvement']:
+    print(grade, sum(1 for s in valid_students if s['grade'] == grade))
+
+print("\nOverall class performance:")
+print("Total students:", len(valid_students))
+print("Passed:", len(passed_students))
+print("Failed:", len(failed_students))
+print("Class pass percentage:", round(len(passed_students) / len(valid_students) * 100, 2) if valid_students else 0, "%")
+print("Class average:", round(class_average, 2))
+print("Invalid records:", len(invalid_records))
+
+print("\nSearch options: 1.Name 2.Marks range 3.Grade 4.Pass/Fail")
+choice = input("Enter choice: ")
+
+if choice == '1':
+    name = input("Enter student name: ").strip().lower()
+    result = [s for s in valid_students if name in s['name'].lower()]
+elif choice == '2':
+    low = int(input("Enter minimum marks: "))
+    high = int(input("Enter maximum marks: "))
+    if not 0 <= low <= high <= 100:
+        result = []
+        print("Invalid marks range")
+    else:
+        result = [s for s in valid_students if any(low <= s[sub] <= high for sub in ['python', 'sql', 'web_api'])]
+elif choice == '3':
+    grade = input("Enter grade: ").strip().lower()
+    result = [s for s in valid_students if s['grade'].lower() == grade]
+elif choice == '4':
+    status = input("Enter Pass or Fail: ").strip().lower()
+    result = [s for s in valid_students if s['status'].lower() == status]
+else:
+    result = []
+    print("Invalid choice")
+
+print("Search results:")
+for s in result:
+    print(s)

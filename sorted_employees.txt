@@ -1,0 +1,11 @@
+name,employee_id,role,monthly_salary,annual_salary
+Pooja Rao,E110,Tester,90000.0,1080000.0
+Amit Kumar,E103,Developer,85000.0,1020000.0
+Karan Mehta,E107,Developer,70000.0,840000.0
+Rahul Sharma,E101,Developer,65000.0,780000.0
+Neha Gupta,E108,Tester,62000.0,744000.0
+Sneha Patel,E104,Tester,60000.0,720000.0
+Vikram Singh,E105,Developer,58000.0,696000.0
+Arjun Nair,E109,Developer,57000.0,684000.0
+Priya Reddy,E102,Tester,55000.0,660000.0
+Anjali Verma,E106,Tester,50000.0,600000.0
